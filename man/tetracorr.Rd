@@ -29,7 +29,7 @@ input variable was in p-value form.
 
   data(mtcars)
   vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  tetracorrs(mtcars, vars)
+  tetracorr(mtcars, vars)
 }
 \seealso{
 \code{\link{polychor}}

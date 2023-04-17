@@ -21,9 +21,6 @@ using the quantile function for the standard normal distribution.
                    markname = c("A", "B", "C"))
   pvalues_to_zscores(df)
 
-  df <- data.frame(p1 = c(0.05, 0.01, 0.001), p2 = c(0.1, 0.2, 0.3),
-                   markname = c("A", "B", "C"))
-  pvalues_to_zscores(df)
 }
 \seealso{
 \code{\link{qnorm}}

@@ -24,7 +24,7 @@
 #' @examples
 #'   data(mtcars)
 #'   vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-#'   tetracorrs(mtcars, vars)
+#'   tetracorr(mtcars, vars)
 tetracorr <- function(data, vars) {
 
   # apply probit transformation to p-values
@@ -37,9 +37,8 @@ tetracorr <- function(data, vars) {
   df_sigma <- polycorr(data, vars)
 
   # calculate cumulative sum of p-values (sumsigmadsn)
-  if (coefft == 1) {
-    sum_sigma <- sum(df_sigma$PLCORR)
-  }
+  sum_sigma <- sum(df_sigma$PLCORR)
+
 
   # reshape to study x study
   df_sigma <- reshape2::dcast(df_sigma, row ~ col, value.var = "PLCORR")

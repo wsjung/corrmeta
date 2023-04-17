@@ -8,14 +8,13 @@
 #' @return A data frame with columns 'markname', 'sum_chisq', 'sum_z',
 #' 'sum_sigma_var', 'pvalue', 'meta_z', 'meta_p', 'meta_nlog10p'
 #'
+#' @importFrom stats pchisq
+#' @importFrom stats pnorm
+#'
 #' @export
-#' @examples
-#' data("example_data")
-#' df_sigma <- tetracorrs(example_data, c("study1", "study2", "study3"), 1)
-#' fishp(example_data, c("study1", "study2", "study3"), df_sigma, 0.9)
 fishp <- function(df, vars, df_sigma, sum_sigma) {
 
-  # convert p-values to chiseq = -2*log(p)
+  # convert p-values to chisq = -2*log(p)
   fisher_chisq <- df %>%
     dplyr::mutate_at(vars(-markname), ~ -2 * log(.))
 
@@ -23,14 +22,14 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   fisher_z <- pvalues_to_zscores(df)
 
   # calculate correlations of z-transformed p-values using genome scan
-  # results dfset
+  # results
   fisher_chisq$sum_chisq <- rowSums(fisher_chisq[,-1], na.rm=TRUE)
   fisher_z$sum_z <- rowSums(fisher_z[,-1], na.rm=TRUE)
 
   # merge chisq and zscore columns
-  fisher <- dplyr::transform(dplyr::merge(
-    dplyr::select(fisher_chisq, markname, sum_chisq),
-    dplyr::select(fisher_z, markname, sum_z),
+  fisher <- transform(merge(
+    select(fisher_chisq, markname, sum_chisq),
+    select(fisher_z, markname, sum_z),
     by="markname"
   ))
 
@@ -55,7 +54,7 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   df[df$num_obs < length(vars) & df$num_obs > 1, "sum_sigma_var"] <- df_other_sums
 
   # merge
-  fisher <- dplyr::transform(dplyr::merge(
+  fisher <- transform(merge(
     fisher,
     df,
     by="markname"

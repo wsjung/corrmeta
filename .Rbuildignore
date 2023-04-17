@@ -1,2 +1,6 @@
 ^CMA\.Rproj$
 ^\.Rproj\.user$
+^LICENSE\.md$
+tests
+toydata
+^README\.Rmd$

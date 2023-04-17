@@ -22,8 +22,3 @@ A data frame with columns 'markname', 'sum_chisq', 'sum_z',
 \description{
 Calculate Fisher's method p-value and meta-analysis statistics
 }
-\examples{
-data("example_data")
-df_sigma <- tetracorrs(example_data, c("study1", "study2", "study3"), 1)
-fishp(example_data, c("study1", "study2", "study3"), df_sigma, 0.9)
-}

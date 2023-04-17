@@ -2,7 +2,10 @@
 
 export(fishp)
 export(polycorr)
+export(pvalues_to_zscores)
 export(tetracorr)
 import(dplyr)
 importFrom(polycor,polychor)
+importFrom(stats,pchisq)
+importFrom(stats,pnorm)
 importFrom(stats,qnorm)

@@ -32,17 +32,18 @@ polycorr <- function(data, varlist) {
   for (i in 1:length(varlist)) {
     vari <- varlist[i]
 
-    # Store diagonal correlation
-    if (vari == varj) {
-      temp_df <- data.frame(row = vari, col = vari,
-                            PLCORR = 1, E_PLCORR = 0)
-      polycorrs <- rbind(polycorrs, temp_df)
-      next
-    }
 
     # Loop over remaining variables and compute correlation
     for (j in 1:length(varlist)) {
       varj <- varlist[j]
+
+      # Store diagonal correlation
+      if (vari == varj) {
+        temp_df <- data.frame(row = vari, col = vari,
+                              PLCORR = 1, E_PLCORR = 0)
+        polycorrs <- rbind(polycorrs, temp_df)
+        next
+      }
 
       # Compute correlation
       corr <- polycor::polychor(table(data[, c(vari,varj)]), ML=TRUE)
