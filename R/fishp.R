@@ -17,7 +17,7 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
 
   # convert p-values to chiseq = -2*log(p)
   fisher_chisq <- df %>%
-    mutate_at(vars(-markname), ~ -2 * log(.))
+    dplyr::mutate_at(vars(-markname), ~ -2 * log(.))
 
   # convert p-values to z-scores
   fisher_z <- pvalues_to_zscores(df)
@@ -28,9 +28,9 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   fisher_z$sum_z <- rowSums(fisher_z[,-1], na.rm=TRUE)
 
   # merge chisq and zscore columns
-  fisher <- transform(merge(
-    select(fisher_chisq, markname, sum_chisq),
-    select(fisher_z, markname, sum_z),
+  fisher <- dplyr::transform(dplyr::merge(
+    dplyr::select(fisher_chisq, markname, sum_chisq),
+    dplyr::select(fisher_z, markname, sum_z),
     by="markname"
   ))
 
@@ -55,7 +55,7 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   df[df$num_obs < length(vars) & df$num_obs > 1, "sum_sigma_var"] <- df_other_sums
 
   # merge
-  fisher <- transform(merge(
+  fisher <- dplyr::transform(dplyr::merge(
     fisher,
     df,
     by="markname"

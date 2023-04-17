@@ -42,7 +42,7 @@ tetracorr <- function(data, vars) {
   }
 
   # reshape to study x study
-  df_sigma <- dcast(df_sigma, row ~ col, value.var = "PLCORR")
+  df_sigma <- reshape2::dcast(df_sigma, row ~ col, value.var = "PLCORR")
 
   list("sigma" = df_sigma, "sum_sigma" = sum_sigma)
 }
