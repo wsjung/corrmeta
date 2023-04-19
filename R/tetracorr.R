@@ -12,10 +12,6 @@
 #'         p-value form.
 #' @importFrom polycor polychor
 #' @export
-#' @examples
-#'   data(mtcars)
-#'   vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-#'   tetracorrs(mtcars, vars)
 #'
 #' @author Woo Jung
 #' @keywords correlation, tetrachoric
@@ -41,6 +37,7 @@ tetracorr <- function(data, vars) {
 
 
   # reshape to study x study
+  # TODO: reshape2 is deprecated
   df_sigma <- reshape2::dcast(df_sigma, row ~ col, value.var = "PLCORR")
 
   list("sigma" = df_sigma, "sum_sigma" = sum_sigma)
