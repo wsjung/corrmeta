@@ -26,12 +26,19 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   fisher_chisq$sum_chisq <- rowSums(fisher_chisq[,-1], na.rm=TRUE)
   fisher_z$sum_z <- rowSums(fisher_z[,-1], na.rm=TRUE)
 
+  # sort datasets
+  fisher_chisq <- fisher_chisq %>% arrange(markname)
+  fisher_z <- fisher_z %>% arrange(markname)
+
   # merge chisq and zscore columns
-  fisher <- transform(merge(
-    select(fisher_chisq, markname, sum_chisq),
-    select(fisher_z, markname, sum_z),
-    by="markname"
-  ))
+  # fisher <- transform(merge(
+  #   select(fisher_chisq, markname, sum_chisq),
+  #   select(fisher_z, markname, sum_z),
+  #   by="markname"
+  # ))
+  fisher <- cbind(select(fisher_chisq, markname, sum_chisq), select(fisher_z, sum_z))
+  # remove duplicates
+  # fisher <- fisher[!duplicated(fisher),]
 
   # find number of observations in each dfset
   df$num_obs <- apply(df[,-1], 1, function(x) sum(!is.na(x)))
@@ -54,11 +61,15 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   df[df$num_obs < length(vars) & df$num_obs > 1, "sum_sigma_var"] <- df_other_sums
 
   # merge
-  fisher <- transform(merge(
-    fisher,
-    df,
-    by="markname"
-  ))
+  # fisher <- transform(merge(
+  #   fisher,
+  #   df,
+  #   by="markname"
+  # ))
+  fisher <- cbind(
+    df %>% arrange("markname"),
+    select(fisher, sum_chisq, sum_z)
+  )
 
   # calculate p-value --> SDF of Chi-sq distribution
   fisher$pvalue <- pchisq(fisher$sum_chisq, df=2*length(vars), lower.tail=FALSE)
