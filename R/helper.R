@@ -21,7 +21,7 @@
 pvalues_to_zscores <- function(df_pvalues) {
 
   df_zscores <- df_pvalues %>%
-    mutate_at(vars(-markname), qnorm)
+    mutate_at(vars(-markname), ~qnorm(.x, lower.tail = FALSE))
 
   df_zscores
 }

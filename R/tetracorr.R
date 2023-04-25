@@ -11,6 +11,7 @@
 #'         and the sum of the tetrachoric correlations if the input variable was in
 #'         p-value form.
 #' @importFrom polycor polychor
+#' @importForm tidyr pivot_wider
 #' @export
 #'
 #' @author Woo Jung
@@ -38,7 +39,8 @@ tetracorr <- function(data, vars) {
 
   # reshape to study x study
   # TODO: reshape2 is deprecated
-  df_sigma <- reshape2::dcast(df_sigma, row ~ col, value.var = "PLCORR")
+  df_sigma <- df_sigma %>%
+    pivot_wider(id_cols=row, names_from=col, values_from=PLCORR)
 
   list("sigma" = df_sigma, "sum_sigma" = sum_sigma)
 }

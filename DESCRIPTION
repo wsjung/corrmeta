@@ -16,4 +16,5 @@ Imports:
     dplyr,
     polycor,
     reshape2,
-    stats
+    stats,
+    tidyr

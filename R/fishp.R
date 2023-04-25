@@ -21,8 +21,7 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   # convert p-values to z-scores
   fisher_z <- pvalues_to_zscores(df)
 
-  # calculate correlations of z-transformed p-values using genome scan
-  # results
+  # calculate correlations of z-transformed p-values using genome scan results
   fisher_chisq$sum_chisq <- rowSums(fisher_chisq[,-1], na.rm=TRUE)
   fisher_z$sum_z <- rowSums(fisher_z[,-1], na.rm=TRUE)
 
@@ -31,16 +30,9 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   fisher_z <- fisher_z %>% arrange(markname)
 
   # merge chisq and zscore columns
-  # fisher <- transform(merge(
-  #   select(fisher_chisq, markname, sum_chisq),
-  #   select(fisher_z, markname, sum_z),
-  #   by="markname"
-  # ))
   fisher <- cbind(select(fisher_chisq, markname, sum_chisq), select(fisher_z, sum_z))
-  # remove duplicates
-  # fisher <- fisher[!duplicated(fisher),]
 
-  # find number of observations in each dfset
+  # find number of observations
   df$num_obs <- apply(df[,-1], 1, function(x) sum(!is.na(x)))
 
   # 1) no missing observations --> sum_sigma_var = sum_sigma
@@ -50,7 +42,7 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   df[df$num_obs == 1, "sum_sigma_var"] <- 1
 
   # 3) other (two observations)
-  df_other <- df[df$num_obs < length(vars) & df$num_obs > 1, ]
+  df_other <- df[df$num_obs != length(vars) & df$num_obs != 1, ]
   df_other_sums <- apply(df_other, 1, function(x) {
     row_name <- col_name <- vars[vars %in% names(x)[which(!is.na(x))]]
     col_index <- match(col_name, names(df_sigma))
@@ -59,15 +51,11 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   })
 
   df[df$num_obs < length(vars) & df$num_obs > 1, "sum_sigma_var"] <- df_other_sums
+  df <- df %>% arrange(markname) # sort
 
-  # merge
-  # fisher <- transform(merge(
-  #   fisher,
-  #   df,
-  #   by="markname"
-  # ))
+  # concatenate columns
   fisher <- cbind(
-    df %>% arrange("markname"),
+    df,
     select(fisher, sum_chisq, sum_z)
   )
 
@@ -78,7 +66,7 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   fisher$meta_z <- fisher$sum_z / sqrt(fisher$sum_sigma_var)
 
   # calculate meta p-value --> SDF of normal distribution
-  fisher$meta_p <- pnorm(fisher$meta_z)
+  fisher$meta_p <- pnorm(fisher$meta_z, lower.tail=F)
 
   # calculate -log10p
   fisher$meta_nlog10p <- -1 * log10(fisher$meta_p)
