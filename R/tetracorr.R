@@ -11,7 +11,7 @@
 #'         and the sum of the tetrachoric correlations if the input variable was in
 #'         p-value form.
 #' @importFrom polycor polychor
-#' @importForm tidyr pivot_wider
+#' @importFrom tidyr pivot_wider
 #' @export
 #'
 #' @author Woo Jung
