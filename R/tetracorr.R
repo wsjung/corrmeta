@@ -40,7 +40,7 @@ tetracorr <- function(data, vars) {
   # reshape to study x study
   # TODO: reshape2 is deprecated
   df_sigma <- df_sigma %>%
-    pivot_wider(id_cols=row, names_from=col, values_from=PLCORR)
+    tidyr::pivot_wider(id_cols=row, names_from=col, values_from=PLCORR)
 
   list("sigma" = df_sigma, "sum_sigma" = sum_sigma)
 }

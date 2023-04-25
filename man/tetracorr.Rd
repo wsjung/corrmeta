@@ -25,10 +25,6 @@ input variable was in p-value form.
 \examples{
   data(mtcars)
   vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  tetracorrs(mtcars, vars)
-
-  data(mtcars)
-  vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
   tetracorr(mtcars, vars)
 }
 \seealso{
