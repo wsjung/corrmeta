@@ -5,13 +5,14 @@
 #' correlation coefficients, and the sum of the tetrachoric correlations if the
 #' input variable was in p-value form.
 #'
-#' @param data A data frame with variables to correlate
-#' @param vars A vector of variable names to correlate
-#' @return A list containing a data frame with tetrachoric correlation coefficients,
+#' @param data data frame with "markname" and study names as column names.
+#' @param varlist character vector of study names to include in the meta-analysis.
+#' @return list containing a data frame with tetrachoric correlation coefficients,
 #'         and the sum of the tetrachoric correlations if the input variable was in
 #'         p-value form.
 #' @importFrom polycor polychor
 #' @importFrom tidyr pivot_wider
+#' @importFrom magrittr %>%
 #' @export
 #'
 #' @author Woo Jung
@@ -23,9 +24,9 @@
 #'                    scan2 = generate_random_p_values(25, 0.1),
 #'                    scan3 = generate_random_p_values(25, 0.1),
 #'                    markname = LETTERS[1:25])
-#'   vars <- c("scan1", "scan2", "scan3")
-#'   tetracorr(df, vars)
-tetracorr <- function(data, vars) {
+#'   varlist <- c("scan1", "scan2", "scan3")
+#'   tetracorr(df, varlist)
+tetracorr <- function(data, varlist) {
 
   # apply probit transformation to p-values
   data <- pvalues_to_zscores(data)
@@ -34,7 +35,7 @@ tetracorr <- function(data, vars) {
   data[, -1] <- lapply(data[, -1], function(x) as.integer(x > 0))
 
   # calculate tetrachoric correlation
-  df_sigma <- polycorr(data, vars)
+  df_sigma <- polycorr(data, varlist)
 
   # calculate cumulative sum of p-values (sumsigmadsn)
   sum_sigma <- sum(df_sigma$PLCORR)

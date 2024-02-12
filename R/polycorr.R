@@ -4,18 +4,19 @@
 #' in a given data frame. It returns a data frame with the row and column names of
 #' the variables, the polychoric correlation coefficient, and its standard error.
 #'
-#' @param data A data frame with variables to correlate
-#' @param varlist A vector of variable names to correlate
-#' @return A data frame with polychoric correlation coefficients and standard errors
+#' @param data data frame with "markname" and study names as column names.
+#' @param varlist character vector of study names to include in the meta-analysis.
+#' @return data frame with polychoric correlation coefficients and standard errors
 #' @importFrom polycor polychor
+#' @importFrom magrittr %>%
 #' @export
 #' @examples
-#'   df <- data.frame(scan1 = runif(10),
-#'                    scan2 = runif(10),
-#'                    scan3 = runif(10),
-#'                    markname = LETTERS[1:10])
-#'   varlist <- c("scan1", "scan2", "scan3")
-#'   polycorr(df, varlist)
+#' df <- data.frame(scan1 = generate_random_p_values(25, 0.1),
+#'                  scan2 = generate_random_p_values(25, 0.1),
+#'                  scan3 = generate_random_p_values(25, 0.1),
+#'                  markname = LETTERS[1:25])
+#' varlist <- c("scan1", "scan2", "scan3")
+#' polycorr(df, varlist)
 #'
 #' @author Woo Jung
 #' @keywords correlation, polychoric
@@ -50,7 +51,7 @@ polycorr <- function(data, varlist) {
 
       # Store
       temp_df <- data.frame(row = vari, col = varj,
-                            PLCORR = corr, E_PLCORR = 0)
+                            PLCORR = corr, E_PLCORR = NA)
       polycorrs <- rbind(polycorrs, temp_df)
     }
   }

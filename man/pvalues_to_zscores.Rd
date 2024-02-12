@@ -7,20 +7,20 @@
 pvalues_to_zscores(df_pvalues)
 }
 \arguments{
-\item{df_pvalues}{A data frame containing p-values}
+\item{df_pvalues}{data frame containing p-values}
 }
 \value{
-A data frame containing Z-scores
+data frame containing Z-scores
 }
 \description{
 This function takes a data frame of p-values and converts them to Z-scores
 using the quantile function for the standard normal distribution.
 }
 \examples{
-  df <- data.frame(scan1 = runif(10),
-                   scan2 = runif(10),
-                   scan3 = runif(10),
-                   markname = LETTERS[1:10])
+  df <- data.frame(scan1 = generate_random_p_values(25, 0.1),
+                   scan2 = generate_random_p_values(25, 0.1),
+                   scan3 = generate_random_p_values(25, 0.1),
+                   markname = LETTERS[1:25])
   pvalues_to_zscores(df)
 
 }
