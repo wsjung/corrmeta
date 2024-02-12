@@ -55,7 +55,7 @@ This loads `trt1`, `trt2`, and `trt3` which are short, simulated SNP-trait assoc
 ## Correlated meta-analysis
 With the preprocessing step, we can now run the function `tetracorr` which takes the input dataframe `data` and `varlist` the list of scans which are column names in `data`. Briefly, `tetracorr` computes the z-scores of the input p-values using the complement probit transformation then calculates the polychoric correlations. 
 ```{r corrmeta}
-tc <- tetracorr(data, varlist)
+tc <- tetracorr(snp_example, varlist)
 tc
 ```
 `tetracorr` returns an object with two elements. `sigma` is the table of tetrachoric correlation coefficients between each pair of the input scans. `sum_sigma` is the sum of all pair-wise tetrachoric corerlation coefficients. 
@@ -63,7 +63,7 @@ tc
 ## Fisher's method
 The final correlated meta-analysis p-value can be computed using the Fisher's method. `fishp` takes the input dataframe, list of scans, and the outputs from `tetracorr`. 
 ```{r fishp}
-fishp(data, varlist, tc$sigma, tc$sum_sigma)
+fishp(snp_example, varlist, tc$sigma, tc$sum_sigma)
 ```
 
 # Example with missing samples
@@ -72,23 +72,23 @@ This example shows `r Biocpkg("corrmeta")`'s capability in dealing with missing 
 ## Preprocessing
 ```{r load_data_missing}
 data(snp_example_missing, package="corrmeta")
-varlist <- c("trt1_missing","trt2_missing","trt3_missing")
+varlist <- c("trt1","trt2","trt3")
 ```
 
 ```{r show_data_missing, echo=FALSE}
-data
+snp_example_missing
 ```
 We can see that `trt2_missing` is missing `c01b000015585s` and `trt3_missing` is missing both `c01b000015585s` and `c01b000015644s`. 
 
 ## Correlated meta-analysis
 ```{r corrmetamissing}
-tc <- tetracorr(data, varlist)
+tc <- tetracorr(snp_example_missing, varlist)
 tc
 ```
 
 ## Fisher's method
 ```{r fishpmissing}
-fishp(data, varlist, tc$sigma, tc$sum_sigma)
+fishp(snp_example_missing, varlist, tc$sigma, tc$sum_sigma)
 ```
 
 # Session info
