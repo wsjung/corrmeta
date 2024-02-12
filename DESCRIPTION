@@ -11,7 +11,7 @@ Authors@R: c(
 Description: Performs Correlated Meta-Analysis (corrmeta) across multiple OMIC
         scans, accounting for hidden non-independencies between elements of the
         scans due to overlapping samples, related samples, or other information.
-BiocViews: Genetics, GenomeWideAssociation, SNP, StatisticalMethod, Software
+biocViews: Genetics, GenomeWideAssociation, SNP, StatisticalMethod, Software
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
