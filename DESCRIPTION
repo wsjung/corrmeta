@@ -1,6 +1,6 @@
 Package: corrmeta
 Title: Correlated Meta-Analysis (corrmeta)
-Version: 0.0.0.9000
+Version: 0.99.0
 Author: Woo Seok Jung <jungw@wustl.edu>,
         Michael Province <mprovince@wustl.edu>
 Maintainer: Woo Seok Jung <jungw@wustl.edu>
@@ -16,12 +16,13 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+VignetteBuilder: knitr
 Suggests:
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0), BiocStyle, knitr, rmarkdown
 Config/testthat/edition: 3
 Imports: 
     dplyr,
     polycor,
-    reshape2,
     stats,
-    tidyr
+    tidyr,
+    magrittr
