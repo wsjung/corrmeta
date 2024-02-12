@@ -15,13 +15,11 @@
 #'
 #' @export
 #' @examples
-#'   df <- data.frame(scan1 = generate_random_p_values(25, 0.1),
-#'                    scan2 = generate_random_p_values(25, 0.1),
-#'                    scan3 = generate_random_p_values(25, 0.1),
-#'                    markname = LETTERS[1:25])
-#'   varlist <- c("scan1", "scan2", "scan3")
-#'   tc <- tetracorr(df, varlist)
-#'   fishp(df, varlist, tc$sigma, tc$sum_sigma)
+#'   data(snp_example)
+#'   head(snp_example)
+#'   varlist <- c("trt1","trt2","trt3")
+#'   tc <- tetracorr(snp_example, varlist)
+#'   fishp(snp_example, varlist, tc$sigma, tc$sum_sigma)
 fishp <- function(df, vars, df_sigma, sum_sigma) {
 
   # convert p-values to chisq = -2*log(p)

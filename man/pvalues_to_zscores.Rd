@@ -17,11 +17,9 @@ This function takes a data frame of p-values and converts them to Z-scores
 using the quantile function for the standard normal distribution.
 }
 \examples{
-  df <- data.frame(scan1 = generate_random_p_values(25, 0.1),
-                   scan2 = generate_random_p_values(25, 0.1),
-                   scan3 = generate_random_p_values(25, 0.1),
-                   markname = LETTERS[1:25])
-  pvalues_to_zscores(df)
+  data(snp_example)
+  head(snp_example)
+  pvalues_to_zscores(snp_example)
 
 }
 \seealso{

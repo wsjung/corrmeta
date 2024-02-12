@@ -20,12 +20,10 @@ in a given data frame. It returns a data frame with the row and column names of
 the variables, the polychoric correlation coefficient, and its standard error.
 }
 \examples{
-df <- data.frame(scan1 = generate_random_p_values(25, 0.1),
-                 scan2 = generate_random_p_values(25, 0.1),
-                 scan3 = generate_random_p_values(25, 0.1),
-                 markname = LETTERS[1:25])
-varlist <- c("scan1", "scan2", "scan3")
-polycorr(df, varlist)
+  data(snp_example)
+  head(snp_example)
+  varlist <- c("trt1","trt2","trt3")
+  polycorr(snp_example, varlist)
 
 }
 \seealso{
