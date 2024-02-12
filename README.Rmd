@@ -13,21 +13,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-# CMA
+# corrmeta
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-Correlated Meta-Analysis (CMA) integrates findings across multiple OMIC scans by considering correlated information between the OMIC scans. 
+Correlated Meta-Analysis (corrmeta) integrates findings across multiple OMIC scans, accounting for hidden non-independencies between elements of the scans that can occur when data are generated with overlapping subjects, related subjects, or other information. 
 
 ## Installation
 
-You can install the development version of CMA from [GitHub](https://github.com/) with:
+You can install the development version of corrmeta from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("wsjung/CMA")
+devtools::install_github("wsjung/corrmeta")
 ```
 
 ## Example
@@ -37,7 +37,7 @@ Coming Soon
 This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
-library(CMA)
+library(corrmeta)
 ## basic example code
 ```
 

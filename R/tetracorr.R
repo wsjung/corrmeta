@@ -19,9 +19,12 @@
 #' @seealso \code{\link{polychor}}
 #'
 #' @examples
-#'   data(mtcars)
-#'   vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-#'   tetracorr(mtcars, vars)
+#'   df <- data.frame(scan1 = generate_random_p_values(25, 0.1),
+#'                    scan2 = generate_random_p_values(25, 0.1),
+#'                    scan3 = generate_random_p_values(25, 0.1),
+#'                    markname = LETTERS[1:25])
+#'   vars <- c("scan1", "scan2", "scan3")
+#'   tetracorr(df, vars)
 tetracorr <- function(data, vars) {
 
   # apply probit transformation to p-values

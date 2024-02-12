@@ -17,8 +17,10 @@ This function takes a data frame of p-values and converts them to Z-scores
 using the quantile function for the standard normal distribution.
 }
 \examples{
-  df <- data.frame(p1 = c(0.05, 0.01, 0.001), p2 = c(0.1, 0.2, 0.3),
-                   markname = c("A", "B", "C"))
+  df <- data.frame(scan1 = runif(10),
+                   scan2 = runif(10),
+                   scan3 = runif(10),
+                   markname = LETTERS[1:10])
   pvalues_to_zscores(df)
 
 }

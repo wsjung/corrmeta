@@ -10,18 +10,16 @@
 #' @importFrom polycor polychor
 #' @export
 #' @examples
-#'   data(mtcars)
-#'   varlist <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-#'   polycorr(mtcars, varlist)
+#'   df <- data.frame(scan1 = runif(10),
+#'                    scan2 = runif(10),
+#'                    scan3 = runif(10),
+#'                    markname = LETTERS[1:10])
+#'   varlist <- c("scan1", "scan2", "scan3")
+#'   polycorr(df, varlist)
 #'
 #' @author Woo Jung
 #' @keywords correlation, polychoric
 #' @seealso \code{\link{polychor}}
-#'
-#' @examples
-#'   data(mtcars)
-#'   varlist <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-#'   polycorr(mtcars, varlist)
 polycorr <- function(data, varlist) {
 
   # Create empty data frame to store correlations

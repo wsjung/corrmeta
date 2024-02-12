@@ -23,9 +23,12 @@ correlation coefficients, and the sum of the tetrachoric correlations if the
 input variable was in p-value form.
 }
 \examples{
-  data(mtcars)
-  vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  tetracorr(mtcars, vars)
+  df <- data.frame(scan1 = generate_random_p_values(25, 0.1),
+                   scan2 = generate_random_p_values(25, 0.1),
+                   scan3 = generate_random_p_values(25, 0.1),
+                   markname = LETTERS[1:25])
+  vars <- c("scan1", "scan2", "scan3")
+  tetracorr(df, vars)
 }
 \seealso{
 \code{\link{polychor}}

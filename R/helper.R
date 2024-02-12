@@ -7,11 +7,13 @@
 #' @return A data frame containing Z-scores
 #' @export
 #' @examples
-#'   df <- data.frame(p1 = c(0.05, 0.01, 0.001), p2 = c(0.1, 0.2, 0.3),
-#'                    markname = c("A", "B", "C"))
+#'   df <- data.frame(scan1 = runif(10),
+#'                    scan2 = runif(10),
+#'                    scan3 = runif(10),
+#'                    markname = LETTERS[1:10])
 #'   pvalues_to_zscores(df)
 #'
-#' @import dplyr
+#' @importFrom dplyr mutate_at
 #' @importFrom stats qnorm
 #'
 #' @author Woo Jung
@@ -21,7 +23,17 @@
 pvalues_to_zscores <- function(df_pvalues) {
 
   df_zscores <- df_pvalues %>%
-    mutate_at(vars(-markname), ~qnorm(.x, lower.tail = FALSE))
+    dplyr::mutate_at(vars(-markname), ~qnorm(.x, lower.tail = FALSE))
 
   df_zscores
+}
+
+generate_random_p_values <- function(n, ratio_significant) {
+
+  p_values <- runif(n, 0.05, 1)
+  num_sig <- round(n * ratio_significant)
+  sig_idx <- sample(1:n, num_sig)
+  p_values[sig_idx] <- runif(num_sig, 0, 0.05)
+
+  p_values
 }

@@ -10,6 +10,7 @@
 #'
 #' @importFrom stats pchisq
 #' @importFrom stats pnorm
+#' @importFrom dplyr mutate_at
 #'
 #' @export
 fishp <- function(df, vars, df_sigma, sum_sigma) {

@@ -20,13 +20,13 @@ in a given data frame. It returns a data frame with the row and column names of
 the variables, the polychoric correlation coefficient, and its standard error.
 }
 \examples{
-  data(mtcars)
-  varlist <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  polycorr(mtcars, varlist)
+  df <- data.frame(scan1 = runif(10),
+                   scan2 = runif(10),
+                   scan3 = runif(10),
+                   markname = LETTERS[1:10])
+  varlist <- c("scan1", "scan2", "scan3")
+  polycorr(df, varlist)
 
-  data(mtcars)
-  varlist <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  polycorr(mtcars, varlist)
 }
 \seealso{
 \code{\link{polychor}}
