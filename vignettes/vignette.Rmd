@@ -7,7 +7,7 @@ output:
       toc_float: true
 bibliography: ref.bib
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{corrmeta}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\VignetteDepends{magrittr, dplyr}
@@ -47,43 +47,10 @@ Check that there is no error when loading the package.
 ### Load data
 
 ```{r load_data}
-data("trt1", package = "corrmeta")
-data("trt2", package = "corrmeta")
-data("trt3", package = "corrmeta")
+data(snp_example, package="corrmeta")
 varlist <- c("trt1","trt2","trt3")
 ```
-This loads `trt1`, `trt2`, and `trt3` which are short, simulated SNP-trait association datasets. Note that although the examples are working on SNP datasets, `r Biocpkg("corrmeta")` works for any common OMIC unit of inference across each input dataset. 
-
-```{r trt1, echo=FALSE}
-knitr::kable(
-  head(trt1), caption = "A table of the first 10 rows of `trt1`."
-)
-```
-```{r trt2, echo=FALSE}
-knitr::kable(
-  head(trt2), caption = "A table of the first 10 rows of `trt2`."
-)
-```
-```{r trt3, echo=FALSE}
-knitr::kable(
-  head(trt3), caption = "A table of the first 10 rows of `trt3`."
-)
-```
-
-### Format data
-`r Biocpkg("corrmeta")` requires that the input is a single dataframe where the OMIC units of inference are under column `markname` and each scan has its own column:
-```{r format}
-data <- merge(
-    dplyr::select(trt1, markname, pval),
-    dplyr::select(trt2, markname, pval),
-    by='markname'
-  ) %>% merge(
-    dplyr::select(trt3, markname, pval),
-    by='markname'
-  )
-  colnames(data)[-1] = varlist
-  data
-```
+This loads `trt1`, `trt2`, and `trt3` which are short, simulated SNP-trait association datasets. Note that although the examples are working on SNP datasets, `r Biocpkg("corrmeta")` works for any common OMIC unit of inference across each input dataset. `r Biocpkg("corrmeta")` requires that the input is a single dataframe where the OMIC units of inference are under column `markname` and each scan has its own column.
 
 ## Correlated meta-analysis
 With the preprocessing step, we can now run the function `tetracorr` which takes the input dataframe `data` and `varlist` the list of scans which are column names in `data`. Briefly, `tetracorr` computes the z-scores of the input p-values using the complement probit transformation then calculates the polychoric correlations. 
@@ -104,25 +71,12 @@ This example shows `r Biocpkg("corrmeta")`'s capability in dealing with missing 
 
 ## Preprocessing
 ```{r load_data_missing}
-data("trt1_missing", package = "corrmeta")
-data("trt2_missing", package = "corrmeta")
-data("trt3_missing", package = "corrmeta")
+data(snp_example_missing, package="corrmeta")
 varlist <- c("trt1_missing","trt2_missing","trt3_missing")
 ```
 
-```{r formatmissing}
-data <- merge(
-    dplyr::select(trt1, markname, pval),
-    dplyr::select(trt2, markname, pval),
-    by='markname',
-    all=TRUE
-  ) %>% merge(
-    dplyr::select(trt3, markname, pval),
-    by='markname',
-    all=TRUE
-  )
-  colnames(data)[-1] = varlist
-  data
+```{r show_data_missing, echo=FALSE}
+data
 ```
 We can see that `trt2_missing` is missing `c01b000015585s` and `trt3_missing` is missing both `c01b000015585s` and `c01b000015644s`. 
 
