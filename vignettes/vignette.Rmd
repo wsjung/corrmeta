@@ -19,21 +19,19 @@ library(dplyr)
 ```
 
 # Introduction
-Meta-analysis is a common tool for integrating findings across multiple OMIC scans, particularly when investigators have limited access to only summary results from each study. Traditional meta-analysis techniques often overlook the problem of hidden non-independencies among study elements, such as overlapping or related subjects, leading to potential biases and inaccuracies in the aggregated results. The `r Biocpkg("corrmeta")` package presents a solution for conducting correlated meta-analysis, a critical tool for researchers dealing with the complexities of data dependencies in studies with potentially related subjects [@province2005ref], [@borecki2008ref], [@province2013ref]. This vignette will cover basic usage of the `r Biocpkg("corrmeta")` package.
+Meta-analysis is a common tool for integrating findings across multiple OMIC scans, particularly when investigators have limited access to only summary results from each study. Traditional meta-analysis techniques often overlook the problem of hidden non-independencies among study elements, such as overlapping or related subjects, leading to potential biases and inaccuracies in the aggregated results. The `corrmeta` package presents a solution for conducting correlated meta-analysis, a critical tool for researchers dealing with the complexities of data dependencies in studies with potentially related subjects [@province2005ref], [@borecki2008ref], [@province2013ref]. This vignette will cover basic usage of the `corrmeta"` package.
 
 # Installation
 
-## Bioconductor installation (Recommended)
-```{r install_bioc, eval=FALSE}
-if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
- BiocManager::install("corrmeta")
+## Install from CRAN
+```{r install_CRAN, eval=FALSE}
+install.packages("corrmeta")
 ```
 Try this first before other installation methods.
 
 ## Install from Github
 ```{r install_github, eval=FALSE}
-BiocManager::install("wsjung/corrmeta")
+devtools::install_github("wsjung/corrmeta")
 ```
 
 ## Load the package
@@ -50,7 +48,7 @@ Check that there is no error when loading the package.
 data(snp_example, package="corrmeta")
 varlist <- c("trt1","trt2","trt3")
 ```
-This loads `trt1`, `trt2`, and `trt3` which are short, simulated SNP-trait association datasets. Note that although the examples are working on SNP datasets, `r Biocpkg("corrmeta")` works for any common OMIC unit of inference across each input dataset. `r Biocpkg("corrmeta")` requires that the input is a single dataframe where the OMIC units of inference are under column `markname` and each scan has its own column.
+This loads `trt1`, `trt2`, and `trt3` which are short, simulated SNP-trait association datasets. Note that although the examples are working on SNP datasets, `corrmeta` works for any common OMIC unit of inference across each input dataset. `corrmeta` requires that the input is a single dataframe where the OMIC units of inference are under column `markname` and each scan has its own column.
 
 ## Correlated meta-analysis
 With the preprocessing step, we can now run the function `tetracorr` which takes the input dataframe `data` and `varlist` the list of scans which are column names in `data`. Briefly, `tetracorr` computes the z-scores of the input p-values using the complement probit transformation then calculates the polychoric correlations. 
@@ -67,7 +65,7 @@ fishp(snp_example, varlist, tc$sigma, tc$sum_sigma)
 ```
 
 # Example with missing samples
-This example shows `r Biocpkg("corrmeta")`'s capability in dealing with missing samples across the scans. This is possible by leveraging the basic property of the MVN distribution that every subdimensional space is also MVN distributed (learn more at [@province2013ref]). The example datasets are the same as above, but with some samples removed. 
+This example shows `corrmeta`'s capability in dealing with missing samples across the scans. This is possible by leveraging the basic property of the MVN distribution that every subdimensional space is also MVN distributed (learn more at [@province2013ref]). The example datasets are the same as above, but with some samples removed. 
 
 ## Preprocessing
 ```{r load_data_missing}

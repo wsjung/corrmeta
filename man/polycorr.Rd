@@ -20,10 +20,11 @@ in a given data frame. It returns a data frame with the row and column names of
 the variables, the polychoric correlation coefficient, and its standard error.
 }
 \examples{
+\donttest{
   data(snp_example)
-  head(snp_example)
   varlist <- c("trt1","trt2","trt3")
   polycorr(snp_example, varlist)
+}
 
 }
 \seealso{

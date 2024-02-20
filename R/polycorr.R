@@ -11,10 +11,11 @@
 #' @importFrom magrittr %>%
 #' @export
 #' @examples
+#' \donttest{
 #'   data(snp_example)
-#'   head(snp_example)
 #'   varlist <- c("trt1","trt2","trt3")
 #'   polycorr(snp_example, varlist)
+#' }
 #'
 #' @author Woo Jung
 #' @keywords correlation, polychoric

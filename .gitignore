@@ -34,4 +34,6 @@ results
 .settings
 .tm_properties
 .Rproj
+*.tar.gz
+*.Rcheck/
 

@@ -46,3 +46,4 @@ tetracorr <- function(data, varlist) {
 
   list("sigma" = df_sigma, "sum_sigma" = sum_sigma)
 }
+if(getRversion() >= "4.3.2")  utils::globalVariables(c("PLCORR"))

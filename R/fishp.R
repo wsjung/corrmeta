@@ -81,3 +81,4 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
 
   fisher
 }
+if(getRversion() >= "4.3.2")  utils::globalVariables(c("markname","sum_chisq","sum_z"))

@@ -1,13 +1,9 @@
 Package: corrmeta
 Title: Correlated Meta-Analysis (corrmeta)
-Version: 0.99.0
+Version: 1.0.0
 Author: Woo Seok Jung <jungw@wustl.edu>,
         Michael Province <mprovince@wustl.edu>
 Maintainer: Woo Seok Jung <jungw@wustl.edu>
-Authors@R: c(
-              person("Woo Seok","Jung", role = c("aut","cre"), email = "jungw@wustl.edu"),
-              person("Michael","Province", role = c("aut"), email = "mprovince@wustl.edu")
-            )
 Description: Performs Correlated Meta-Analysis (corrmeta) across multiple OMIC
         scans, accounting for hidden non-independencies between elements of the
         scans due to overlapping samples, related samples, or other information.
