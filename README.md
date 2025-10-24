@@ -4,6 +4,7 @@
 # corrmeta
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/corrmeta)](https://CRAN.R-project.org/package=corrmeta)
 <!-- badges: end -->
 
 Correlated Meta-Analysis (corrmeta) integrates findings across multiple OMIC
