@@ -1,20 +1,28 @@
-Package: CMA
-Title: Correlated Meta-Analysis (CMA)
-Version: 0.0.0.9000
-Authors@R: 
-    person("Woo", "Jung", , "jungw@wustl.edu", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Performs Correlated Meta-Analysis (CMA) on multiple sources of evidence.
+Package: corrmeta
+Title: Correlated Meta-Analysis
+Version: 1.0.1
+Authors@R: c(person("Woo Seok","Jung", role = c("aut","cre"), email = "jungw@wustl.edu"),
+             person("Michael","Province", role = c("aut","cph"), email = "mprovince@wustl.edu"))
+Maintainer: Woo Seok Jung <jungw@wustl.edu>
+Description: Performs Correlated Meta-Analysis ('corrmeta') across multiple OMIC
+        scans, accounting for hidden non-independencies between elements of the
+        scans due to overlapping samples, related samples, or other information. 
+        For more information about the method, refer to the paper
+        Province MA. (2013) <doi:10.1142/9789814447973_0023>.
+biocViews: Genetics, GenomeWideAssociation, SNP, StatisticalMethod,
+        Software
 License: MIT + file LICENSE
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
-Suggests:
-    testthat (>= 3.0.0)
+RoxygenNote: 7.3.3
+VignetteBuilder: knitr
+LazyData: true
+Suggests: testthat (>= 3.0.0), BiocStyle, knitr, rmarkdown, qpdf
 Config/testthat/edition: 3
-Imports: 
-    dplyr,
-    polycor,
-    reshape2,
-    stats,
-    tidyr
+Imports: dplyr, polycor, stats, tidyr, magrittr
+NeedsCompilation: no
+Packaged: 2024-03-06 17:16:33 UTC; rstudio
+Author: Woo Seok Jung [aut, cre],
+  Michael Province [aut, cph]
+Depends: R (>= 3.5.0)
+Repository: CRAN
+Date/Publication: 2024-03-08 09:30:05 UTC

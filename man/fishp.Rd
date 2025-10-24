@@ -7,13 +7,13 @@
 fishp(df, vars, df_sigma, sum_sigma)
 }
 \arguments{
-\item{df}{A data frame with columns 'markname' and study names as column names}
+\item{df}{data frame with "markname" and study names as column names.}
 
-\item{vars}{A character vector of study names to include in the meta-analysis}
+\item{vars}{character vector of study names to include in the meta-analysis.}
 
-\item{df_sigma}{A data frame of tetrachoric correlations}
+\item{df_sigma}{data frame of tetrachoric correlations.}
 
-\item{sum_sigma}{Sum of tetrachoric correlations}
+\item{sum_sigma}{sum of tetrachoric correlations.}
 }
 \value{
 A data frame with columns 'markname', 'sum_chisq', 'sum_z',
@@ -21,4 +21,11 @@ A data frame with columns 'markname', 'sum_chisq', 'sum_z',
 }
 \description{
 Calculate Fisher's method p-value and meta-analysis statistics
+}
+\examples{
+  data(snp_example)
+  head(snp_example)
+  varlist <- c("trt1","trt2","trt3")
+  tc <- tetracorr(snp_example, varlist)
+  fishp(snp_example, varlist, tc$sigma, tc$sum_sigma)
 }

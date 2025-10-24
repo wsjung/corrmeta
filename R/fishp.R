@@ -1,39 +1,47 @@
 #' Calculate Fisher's method p-value and meta-analysis statistics
 #'
-#' @param df A data frame with columns 'markname' and study names as column names
-#' @param vars A character vector of study names to include in the meta-analysis
-#' @param df_sigma A data frame of tetrachoric correlations
-#' @param sum_sigma Sum of tetrachoric correlations
+#' @param df data frame with "markname" and study names as column names.
+#' @param vars character vector of study names to include in the meta-analysis.
+#' @param df_sigma data frame of tetrachoric correlations.
+#' @param sum_sigma sum of tetrachoric correlations.
 #'
 #' @return A data frame with columns 'markname', 'sum_chisq', 'sum_z',
 #' 'sum_sigma_var', 'pvalue', 'meta_z', 'meta_p', 'meta_nlog10p'
 #'
 #' @importFrom stats pchisq
 #' @importFrom stats pnorm
+#' @importFrom dplyr mutate_at vars arrange select
+#' @importFrom magrittr %>%
 #'
 #' @export
+#' @examples
+#'   data(snp_example)
+#'   head(snp_example)
+#'   varlist <- c("trt1","trt2","trt3")
+#'   tc <- tetracorr(snp_example, varlist)
+#'   fishp(snp_example, varlist, tc$sigma, tc$sum_sigma)
 fishp <- function(df, vars, df_sigma, sum_sigma) {
 
   # convert p-values to chisq = -2*log(p)
   fisher_chisq <- df %>%
-    dplyr::mutate_at(vars(-markname), ~ -2 * log(.))
+    dplyr::mutate_at(dplyr::vars(-markname), ~ -2 * log(.))
 
   # convert p-values to z-scores
   fisher_z <- pvalues_to_zscores(df)
 
   # calculate correlations of z-transformed p-values using genome scan results
-  fisher_chisq$sum_chisq <- rowSums(fisher_chisq[,-1], na.rm=TRUE)
-  fisher_z$sum_z <- rowSums(fisher_z[,-1], na.rm=TRUE)
+  fisher_chisq$sum_chisq <- rowSums(dplyr::select(fisher_chisq, !markname), na.rm=TRUE)
+  fisher_z$sum_z <- rowSums(dplyr::select(fisher_z, !markname), na.rm=TRUE)
 
   # sort datasets
-  fisher_chisq <- fisher_chisq %>% arrange(markname)
-  fisher_z <- fisher_z %>% arrange(markname)
+  fisher_chisq <- fisher_chisq %>% dplyr::arrange(markname)
+  fisher_z <- fisher_z %>% dplyr::arrange(markname)
 
   # merge chisq and zscore columns
-  fisher <- cbind(select(fisher_chisq, markname, sum_chisq), select(fisher_z, sum_z))
+  fisher <- cbind(dplyr::select(fisher_chisq, markname, sum_chisq), dplyr::select(fisher_z, sum_z))
 
   # find number of observations
-  df$num_obs <- apply(df[,-1], 1, function(x) sum(!is.na(x)))
+  df$num_obs <- apply(dplyr::select(df, !markname), 1, function(x) sum(!is.na(x)))
 
   # 1) no missing observations --> sum_sigma_var = sum_sigma
   df[df$num_obs == length(vars), "sum_sigma_var"] <- sum_sigma
@@ -51,12 +59,12 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
   })
 
   df[df$num_obs < length(vars) & df$num_obs > 1, "sum_sigma_var"] <- df_other_sums
-  df <- df %>% arrange(markname) # sort
+  df <- df %>% dplyr::arrange(markname) # sort
 
   # concatenate columns
   fisher <- cbind(
     df,
-    select(fisher, sum_chisq, sum_z)
+    dplyr::select(fisher, sum_chisq, sum_z)
   )
 
   # calculate p-value --> SDF of Chi-sq distribution
@@ -73,3 +81,4 @@ fishp <- function(df, vars, df_sigma, sum_sigma) {
 
   fisher
 }
+if(getRversion() >= "4.3.2")  utils::globalVariables(c("markname","sum_chisq","sum_z"))

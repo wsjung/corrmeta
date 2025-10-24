@@ -5,3 +5,4 @@
 .DS_Store
 tests/testthat/test_cma.R
 results
+*.tar.gz

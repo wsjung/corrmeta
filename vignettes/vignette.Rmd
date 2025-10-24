@@ -1,0 +1,97 @@
+---
+title: "Basic correlated meta-analysis with corrmeta"
+author: "Woo Jung"
+package: corrmeta
+output:
+  BiocStyle::html_document:
+      toc_float: true
+bibliography: ref.bib
+vignette: >
+  %\VignetteIndexEntry{corrmeta}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{magrittr, dplyr}
+---
+```{r, echo=FALSE, results="hide", message=FALSE}
+library(BiocStyle)
+library(magrittr)
+library(dplyr)
+```
+
+# Introduction
+Meta-analysis is a common tool for integrating findings across multiple OMIC scans, particularly when investigators have limited access to only summary results from each study. Traditional meta-analysis techniques often overlook the problem of hidden non-independencies among study elements, such as overlapping or related subjects, leading to potential biases and inaccuracies in the aggregated results. The `corrmeta` package presents a solution for conducting correlated meta-analysis, a critical tool for researchers dealing with the complexities of data dependencies in studies with potentially related subjects [@province2005ref], [@borecki2008ref], [@province2013ref]. This vignette will cover basic usage of the `corrmeta"` package.
+
+# Installation
+
+## Install from CRAN
+```{r install_CRAN, eval=FALSE}
+install.packages("corrmeta")
+```
+Try this first before other installation methods.
+
+## Install from Github
+```{r install_github, eval=FALSE}
+devtools::install_github("wsjung/corrmeta")
+```
+
+## Load the package
+```{r install_load}
+library(corrmeta)
+```
+Check that there is no error when loading the package.
+
+# Simple example
+## Preprocessing
+### Load data
+
+```{r load_data}
+data(snp_example, package="corrmeta")
+varlist <- c("trt1","trt2","trt3")
+```
+This loads `trt1`, `trt2`, and `trt3` which are short, simulated SNP-trait association datasets. Note that although the examples are working on SNP datasets, `corrmeta` works for any common OMIC unit of inference across each input dataset. `corrmeta` requires that the input is a single dataframe where the OMIC units of inference are under column `markname` and each scan has its own column.
+
+## Correlated meta-analysis
+With the preprocessing step, we can now run the function `tetracorr` which takes the input dataframe `data` and `varlist` the list of scans which are column names in `data`. Briefly, `tetracorr` computes the z-scores of the input p-values using the complement probit transformation then calculates the polychoric correlations. 
+```{r corrmeta}
+tc <- tetracorr(snp_example, varlist)
+tc
+```
+`tetracorr` returns an object with two elements. `sigma` is the table of tetrachoric correlation coefficients between each pair of the input scans. `sum_sigma` is the sum of all pair-wise tetrachoric corerlation coefficients. 
+
+## Fisher's method
+The final correlated meta-analysis p-value can be computed using the Fisher's method. `fishp` takes the input dataframe, list of scans, and the outputs from `tetracorr`. 
+```{r fishp}
+fishp(snp_example, varlist, tc$sigma, tc$sum_sigma)
+```
+
+# Example with missing samples
+This example shows `corrmeta`'s capability in dealing with missing samples across the scans. This is possible by leveraging the basic property of the MVN distribution that every subdimensional space is also MVN distributed (learn more at [@province2013ref]). The example datasets are the same as above, but with some samples removed. 
+
+## Preprocessing
+```{r load_data_missing}
+data(snp_example_missing, package="corrmeta")
+varlist <- c("trt1","trt2","trt3")
+```
+
+```{r show_data_missing, echo=FALSE}
+snp_example_missing
+```
+We can see that `trt2_missing` is missing `c01b000015585s` and `trt3_missing` is missing both `c01b000015585s` and `c01b000015644s`. 
+
+## Correlated meta-analysis
+```{r corrmetamissing}
+tc <- tetracorr(snp_example_missing, varlist)
+tc
+```
+
+## Fisher's method
+```{r fishpmissing}
+fishp(snp_example_missing, varlist, tc$sigma, tc$sum_sigma)
+```
+
+# Session info
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
+
+# References

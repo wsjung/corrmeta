@@ -7,12 +7,12 @@
 polycorr(data, varlist)
 }
 \arguments{
-\item{data}{A data frame with variables to correlate}
+\item{data}{data frame with "markname" and study names as column names.}
 
-\item{varlist}{A vector of variable names to correlate}
+\item{varlist}{character vector of study names to include in the meta-analysis.}
 }
 \value{
-A data frame with polychoric correlation coefficients and standard errors
+data frame with polychoric correlation coefficients and standard errors
 }
 \description{
 This function calculates the polychoric correlations between pairs of variables
@@ -20,19 +20,16 @@ in a given data frame. It returns a data frame with the row and column names of
 the variables, the polychoric correlation coefficient, and its standard error.
 }
 \examples{
-  data(mtcars)
-  varlist <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  polycorr(mtcars, varlist)
+\donttest{
+  data(snp_example)
+  varlist <- c("trt1","trt2","trt3")
+  polycorr(snp_example, varlist)
+}
 
-  data(mtcars)
-  varlist <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  polycorr(mtcars, varlist)
 }
 \seealso{
-\code{\link{polychor}}
+\code{\link[polycor]{polychor}}
 }
 \author{
 Woo Jung
 }
-\keyword{correlation,}
-\keyword{polychoric}

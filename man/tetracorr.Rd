@@ -4,17 +4,17 @@
 \alias{tetracorr}
 \title{Calculate Tetrachoric Correlations}
 \usage{
-tetracorr(data, vars)
+tetracorr(data, varlist)
 }
 \arguments{
-\item{data}{A data frame with variables to correlate}
+\item{data}{data frame with "markname" and study names as column names.}
 
-\item{vars}{A vector of variable names to correlate}
+\item{varlist}{character vector of study names to include in the meta-analysis.}
 }
 \value{
-A list containing a data frame with tetrachoric correlation coefficients,
-and the sum of the tetrachoric correlations if the input variable was in
-p-value form.
+list containing a data frame with tetrachoric correlation coefficients,
+        and the sum of the tetrachoric correlations if the input variable was in
+        p-value form.
 }
 \description{
 This function calculates the tetrachoric correlations between pairs of variables
@@ -23,15 +23,14 @@ correlation coefficients, and the sum of the tetrachoric correlations if the
 input variable was in p-value form.
 }
 \examples{
-  data(mtcars)
-  vars <- c("mpg", "cyl", "hp", "drat", "wt", "qsec")
-  tetracorr(mtcars, vars)
+  data(snp_example)
+  head(snp_example)
+  varlist <- c("trt1","trt2","trt3")
+  tetracorr(snp_example, varlist)
 }
 \seealso{
-\code{\link{polychor}}
+\code{\link[polycor]{polychor}}
 }
 \author{
 Woo Jung
 }
-\keyword{correlation,}
-\keyword{tetrachoric}
